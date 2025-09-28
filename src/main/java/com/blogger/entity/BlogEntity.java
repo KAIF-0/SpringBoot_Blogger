@@ -2,6 +2,10 @@ package com.blogger.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
@@ -10,11 +14,12 @@ import lombok.Data;
 
 @Entity
 @Table(name = "blogs")
-// @Getter  //used lombok to avoid boilerplate code of getters and setters
+// @Getter //used lombok to avoid boilerplate code of getters and setters
 // @Setter
-// @NoArgsConstructor
+@NoArgsConstructor
 // @AllArgsConstructor
-@Data  //combination of @Getter, @Setter, @RequiredArgsConstructor, @ToString, and @EqualsAndHashCode
+@Data // combination of @Getter, @Setter, @RequiredArgsConstructor, @ToString, and
+      // @EqualsAndHashCode
 public class BlogEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,8 +37,14 @@ public class BlogEntity {
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", nullable = false, referencedColumnName = "id")
+    @JsonBackReference  //to avoid infinite recursion during serialization
+    // @JsonIgnoreProperties({"blogs", "hibernateLazyInitializer", "handler"}) //include user details in blog responses without infinite loops
+    private UserEntity user;
+
     // public BlogEntity() {
-    //     this.createdAt = LocalDateTime.now();
+    // this.createdAt = LocalDateTime.now();
     // }
 
     public BlogEntity(String title, String content, String author) {
@@ -45,42 +56,42 @@ public class BlogEntity {
 
     // // getter and setter methods
     // public Long getId() {
-    //     return id;
+    // return id;
     // }
 
     // public void setId(Long id) {
-    //     this.id = id;
+    // this.id = id;
     // }
 
     // public String getTitle() {
-    //     return title;
+    // return title;
     // }
 
     // public void setTitle(String title) {
-    //     this.title = title;
+    // this.title = title;
     // }
 
     // public String getContent() {
-    //     return content;
+    // return content;
     // }
 
     // public void setContent(String content) {
-    //     this.content = content;
+    // this.content = content;
     // }
 
     // public String getAuthor() {
-    //     return author;
+    // return author;
     // }
 
     // public void setAuthor(String author) {
-    //     this.author = author;
+    // this.author = author;
     // }
 
     // public LocalDateTime getCreatedAt() {
-    //     return createdAt;
+    // return createdAt;
     // }
 
     // public void setCreatedAt(LocalDateTime createdAt) {
-    //     this.createdAt = createdAt;
+    // this.createdAt = createdAt;
     // }
 }
