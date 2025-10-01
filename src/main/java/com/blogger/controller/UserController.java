@@ -47,7 +47,7 @@ public class UserController {
     @PostMapping("/createUser")
     public ResponseEntity<?> createUser(@RequestBody UserEntity user) {
         try {
-            UserEntity createdUser = userService.addUser(user.getUsername(), user.getEmail(), user.getPassword());
+            UserEntity createdUser = userService.addUser(user.getUsername(), user.getEmail(), user.getPassword(), user.getRole());
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new APIResponseEntity<>(201, "User Created Successfully!", createdUser));
         } catch (Exception e) {

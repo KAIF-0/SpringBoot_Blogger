@@ -31,9 +31,19 @@ public class UserEntity {
     @JsonManagedReference
     private List<BlogEntity> blogs;
 
-    public UserEntity(String username, String email, String password) {
+    public enum Role {
+        USER,
+        ADMIN
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role = Role.USER;
+
+    public UserEntity(String username, String email, String password, Role role) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 }
