@@ -3,6 +3,8 @@ package com.blogger.controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.http.HttpStatus;
 import com.blogger.entity.APIResponseEntity;
 import com.blogger.entity.APIErrorEntity;
@@ -18,21 +20,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/getAllUsers")
-    public ResponseEntity<?> getAllUsers() {
+    @GetMapping("/getUser")
+    public ResponseEntity<?> getUser() {
         try {
-            List<UserEntity> users = userService.getAllUsers();
-            return ResponseEntity.ok(new APIResponseEntity<>(200, "Users fetched successfully!", users));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new APIErrorEntity(500, e.getMessage()));
-        }
-    }
-
-    @GetMapping("/get/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable Long id) {
-        try {
-            UserEntity user = userService.getUserById(id);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            UserEntity user = userService.getUserByUsername(username);
             if (user != null) {
                 return ResponseEntity.ok(new APIResponseEntity<>(200, "User fetched successfully!", user));
             }
@@ -47,7 +40,8 @@ public class UserController {
     @PostMapping("/createUser")
     public ResponseEntity<?> createUser(@RequestBody UserEntity user) {
         try {
-            UserEntity createdUser = userService.addUser(user.getUsername(), user.getEmail(), user.getPassword(), user.getRole());
+            UserEntity createdUser = userService.addUser(user.getUsername(), user.getEmail(), user.getPassword(),
+                    user.getRole());
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new APIResponseEntity<>(201, "User Created Successfully!", createdUser));
         } catch (Exception e) {
@@ -56,11 +50,13 @@ public class UserController {
         }
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserEntity userDetails) {
+    @PutMapping("/update")
+    public ResponseEntity<?> updateUser(@RequestBody UserEntity userDetails) {
         try {
-            UserEntity updatedUser = userService.updateUser(
-                    id,
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String oldUsername = authentication.getName();
+            UserEntity updatedUser = userService.updateUserByUsername(
+                    oldUsername,
                     userDetails.getUsername(),
                     userDetails.getEmail(),
                     userDetails.getPassword());
@@ -75,10 +71,12 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteUser() {
         try {
-            UserEntity deletedUser = userService.deleteUserById(id);
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            UserEntity deletedUser = userService.deleteUserByUsername(username);
             if (deletedUser != null) {
                 return ResponseEntity.ok(new APIResponseEntity<>(200, "User deleted successfully!", deletedUser));
             }

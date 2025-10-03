@@ -21,10 +21,6 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<UserEntity> getAllUsers() {
-        return userRepository.findAll();
-    }
-
     public UserEntity addUser(String username, String email, String password, UserEntity.Role role) {
         String encodedPassword = passwordEncoder.encode(password);
         UserEntity user = new UserEntity(username, email, encodedPassword, role);
@@ -32,24 +28,27 @@ public class UserService {
         return user;
     }
 
-    public UserEntity getUserById(Long id) {
-        return userRepository.findById(id).orElse(null);
+    public UserEntity getUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
     }
 
-    public UserEntity deleteUserById(Long id) {
-        UserEntity user = userRepository.findById(id).orElse(null);
+    public UserEntity deleteUserByUsername(String username) {
+        UserEntity user = userRepository.findByUsername(username).orElse(null);
         if (user != null) {
-            userRepository.deleteById(id);
+            userRepository.deleteById(user.getId());
         }
         return user;
     }
 
-    public UserEntity updateUser(Long id, String username, String email, String password) {
-        UserEntity user = userRepository.findById(id).orElse(null);
+    public UserEntity updateUserByUsername(String oldUsername, String username, String email, String password) {
+        UserEntity user = userRepository.findByUsername(oldUsername).orElse(null);
         if (user != null) {
+            if (!oldUsername.equals(username) && userRepository.findByUsername(username).isPresent()) {
+                throw new IllegalArgumentException("Username already exists");
+            }
             user.setUsername(username);
             user.setEmail(email);
-            user.setPassword(passwordEncoder.encode(password)); // Encode the password
+            user.setPassword(passwordEncoder.encode(password));
             userRepository.save(user);
         }
         return user;

@@ -8,12 +8,8 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-// import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -24,7 +20,10 @@ public class SpringSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         return http.authorizeHttpRequests(request -> request
-                .requestMatchers("/blog/**", "/user/getAllUsers").authenticated()
+                .requestMatchers("/admin/**")   //role based access control
+                .hasRole("ADMIN")
+                .requestMatchers("/blog/**", "/admin/**", "/user/delete", "/user/update", "/user/getUser") // secured endpoints, will need to pass user and password
+                .authenticated()
                 .anyRequest().permitAll())
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable) // diabled because we do not giving crsf token in postman
@@ -36,17 +35,17 @@ public class SpringSecurity {
         return new BCryptPasswordEncoder();
     }
 
-
-    ///for testing purpose only with fixed user creds
+    /// for testing purpose only with fixed user creds
     // @Bean
-    // public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-    //     UserDetails user = User.builder()
-    //             .username("user")
-    //             .password(passwordEncoder.encode("test123"))
-    //             .roles("USER")
-    //             .build();
-        
-    //     return new InMemoryUserDetailsManager(user);
+    // public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder)
+    /// {
+    // UserDetails user = User.builder()
+    // .username("user")
+    // .password(passwordEncoder.encode("test123"))
+    // .roles("USER")
+    // .build();
+
+    // return new InMemoryUserDetailsManager(user);
     // }
 
 }
