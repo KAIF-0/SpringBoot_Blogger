@@ -1,0 +1,32 @@
+# # profile demo
+# spring:
+#   application:
+#     name: blogger
+  
+#   datasource:
+#     url: jdbc:postgresql://ep-rough-darkness-adfrk27t-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+#     username: neondb_owner
+#     password: npg_VuJ6p2WkxfhI
+#     driver-class-name: org.postgresql.Driver
+  
+#   jpa:
+#     database-platform: org.hibernate.dialect.PostgreSQLDialect
+#     hibernate:
+#       ddl-auto: update
+#     show-sql: true
+  
+#   devtools:
+#     restart:
+#       enabled: true
+#     livereload:
+#       enabled: true
+
+# server:
+#   address: localhost
+#   port: 8080
+
+# # main file
+# spring:
+#   profiles:
+#     active: demo
+#     default: demo
