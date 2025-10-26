@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableWebSecurity // for enabling web security in the application with customizations
@@ -35,10 +36,16 @@ public class SpringSecurity {
         return new BCryptPasswordEncoder();
     }
 
-    /// for testing purpose only with fixed user creds
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+
+    // for testing purpose only with fixed user creds
     // @Bean
     // public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder)
-    /// {
+    // {
     // UserDetails user = User.builder()
     // .username("user")
     // .password(passwordEncoder.encode("test123"))

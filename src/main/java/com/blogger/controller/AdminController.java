@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import com.blogger.entity.APIErrorEntity;
 import com.blogger.entity.APIResponseEntity;
+import com.blogger.entity.ExternalUserEntity;
 import com.blogger.entity.UserEntity;
 import com.blogger.service.AdminService;
+import com.blogger.service.ExternalUserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,4 +41,5 @@ public class AdminController {
                     .body(new APIErrorEntity(500, e.getMessage()));
         }
     }
+
 }

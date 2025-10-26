@@ -1,10 +1,12 @@
 package com.blogger.service;
 
-import com.blogger.entity.UserEntity;
-import com.blogger.repository.UserRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
+import com.blogger.entity.UserEntity;
+import com.blogger.repository.UserRepository;
 
 @Service
 public class AdminService {
@@ -15,5 +17,7 @@ public class AdminService {
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
     }
+
+    
     
 }
