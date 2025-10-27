@@ -6,20 +6,20 @@
         </encoder>
     </appender>
     <!-- logging on file -->
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender"> 
+        <file>
+            logger.log
+        </file>
         <policy>
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
                 <!-- daily rollover -->
                 <fileNamePattern>logger.%d{yyyy-MM-dd}.log</fileNamePattern>
                 <!-- keep 30 days' worth of history -->
-                <maxHistory>30</maxHistory>
+                <maxHistory>1</maxHistory>
                 <!-- size based -->
                 <maxSize>10MB</maxSize>
             </rollingPolicy>
         </policy>
-        <file>
-            logger.log
-        </file>
         <encoder>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
         </encoder>
