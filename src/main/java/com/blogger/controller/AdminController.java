@@ -42,4 +42,32 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/getUsersByRole/{role}")
+    public ResponseEntity<?> getUsersByRole(@PathVariable String role) {
+        try {
+            List<UserEntity> users = adminService.getUsersByRole(role);
+            
+            logger.info("Fetched users with role '{}' successfully. Total users: {}", role, users.size());
+            return ResponseEntity.ok(new APIResponseEntity<>(200, "Users with role '" + role + "' fetched successfully!", users));
+        } catch (Exception e) {
+            logger.error("Error fetching users with role '{}': {}", role, e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new APIErrorEntity(500, e.getMessage()));
+        }
+    }
+
+    @GetMapping("/getUsersByRoleWithBlogs/{role}/{size}")
+    public ResponseEntity<?> getUsersByRoleWithBlogs(@PathVariable String role, @PathVariable int size) {
+        try {
+            List<UserEntity> usersWithBlogs = adminService.getUsersByRoleWithBlogs(role, size);
+            
+            logger.info("Fetched users with role '{}' and blogs successfully. Total users: {}", role, usersWithBlogs.size());
+            return ResponseEntity.ok(new APIResponseEntity<>(200, "Users with role '" + role + "' and blogs fetched successfully!", usersWithBlogs));
+        } catch (Exception e) {
+            logger.error("Error fetching users with role '{}' and blogs: {}", role, e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new APIErrorEntity(500, e.getMessage()));
+        }
+    }
+
 }

@@ -18,6 +18,22 @@ public class AdminService {
         return userRepository.findAll();
     }
 
-    
-    
+    public List<UserEntity> getUsersByRole(String role) {
+        try {
+            UserEntity.Role roleEnum = UserEntity.Role.valueOf(role.toUpperCase());
+            return userRepository.findByRole(roleEnum);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid role: " + role + ". Valid roles are: USER, ADMIN");
+        }
+    }
+
+    public List<UserEntity> getUsersByRoleWithBlogs(String role ,int size) {
+        try {
+            UserEntity.Role roleEnum = UserEntity.Role.valueOf(role.toUpperCase());
+            return userRepository.findUsersByRoleWithBlogs(roleEnum, size);
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("Invalid role: " + role + ". Valid roles are: USER, ADMIN");
+        }
+    }
+
 }
