@@ -23,7 +23,7 @@ public class SpringSecurity {
         return http.authorizeHttpRequests(request -> request
                 .requestMatchers("/admin/**")   //role based access control
                 .hasRole("ADMIN")
-                .requestMatchers("/blog/**", "/admin/**", "/user/delete", "/user/update", "/user/getUser") // secured endpoints, will need to pass user and password
+                .requestMatchers("/blog/**", "/admin/**", "/user/delete", "/user/update", "/user/getUser", "/externalUsers/**", "/email/**") // secured endpoints, will need to pass user and password
                 .authenticated()
                 .anyRequest().permitAll())
                 .httpBasic(Customizer.withDefaults())

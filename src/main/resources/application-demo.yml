@@ -4,11 +4,25 @@
 #     name: blogger
   
 #   datasource:
-#     url: jdbc:postgresql://ep-rough-darkness-adfrk27t-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
-#     username: neondb_owner
-#     password: npg_VuJ6p2WkxfhI
+#     url: jdbc:postgresql://host.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+#     username: username
+#     password: password
 #     driver-class-name: org.postgresql.Driver
   
+
+    # mail:
+    # host: smtp.gmail.com
+    # port: 587
+    # username: username
+    # password: password
+    # properties:
+    #   mail:
+    #     smtp:
+    #       auth: true
+    #       starttls:
+    #         enable: true  
+
+
 #   jpa:
 #     database-platform: org.hibernate.dialect.PostgreSQLDialect
 #     hibernate:
