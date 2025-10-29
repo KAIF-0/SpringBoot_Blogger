@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableWebSecurity // for enabling web security in the application with customizations
@@ -20,9 +21,10 @@ public class SpringSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         return http.authorizeHttpRequests(request -> request
-                .requestMatchers("/admin/**")   //role based access control
+                .requestMatchers("/admin/**") // role based access control
                 .hasRole("ADMIN")
-                .requestMatchers("/blog/**", "/admin/**", "/user/delete", "/user/update", "/user/getUser", "/externalUsers/**", "/email/**") // secured endpoints, will need to pass user and password
+                .requestMatchers("/blog/**", "/admin/**", "/user/delete", "/user/update", "/user/getUser",
+                        "/externalUsers/**", "/email/**") // secured endpoints, will need to pass user and password
                 .authenticated()
                 .anyRequest().permitAll())
                 .httpBasic(Customizer.withDefaults())
@@ -30,13 +32,15 @@ public class SpringSecurity {
                 .build();
     }
 
-    
-
-	@Bean
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
 
     // for testing purpose only with fixed user creds
     // @Bean

@@ -14,8 +14,18 @@ public class AdminService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CacheService cacheService;
+
+
     public List<UserEntity> getAllUsers() {
-        return userRepository.findAll();
+        List<UserEntity> cachedUsers = cacheService.get("allUsers", UserEntity.class);
+        if (cachedUsers != null) {
+            return cachedUsers;
+        }
+        List<UserEntity> users = userRepository.findAll();
+        cacheService.set("allUsers", users, 300L); // Cache for 5 minutes
+        return users;
     }
 
     public List<UserEntity> getUsersByRole(String role) {

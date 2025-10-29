@@ -7,16 +7,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.blogger.entity.APIErrorEntity;
 import com.blogger.entity.APIResponseEntity;
-import com.blogger.entity.ExternalUserEntity;
 import com.blogger.entity.UserEntity;
 import com.blogger.service.AdminService;
-import com.blogger.service.ExternalUserService;
-
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/admin")
@@ -25,6 +24,7 @@ public class AdminController {
 
     @Autowired
     private AdminService adminService;
+
 
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);  //associated with only one class
 
