@@ -37,7 +37,7 @@ public class SpringSecurity {
                         "/externalUsers/**", "/email/**", "/auth/verify") // secured endpoints, will need to pass user and password
                 .authenticated()
                 .anyRequest().permitAll())
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class) //adding jwt filter for jwt token validation
                 .httpBasic(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable) // disabled because we do not giving crsf token in postman
                 .build();

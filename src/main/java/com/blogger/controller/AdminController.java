@@ -17,8 +17,11 @@ import com.blogger.entity.APIResponseEntity;
 import com.blogger.entity.UserEntity;
 import com.blogger.service.AdminService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/admin")
+@Tag(name = "Admin Controller", description = "APIs for admin operations")
 // @Slf4j  //both can be used for injecting logger
 public class AdminController {
 
