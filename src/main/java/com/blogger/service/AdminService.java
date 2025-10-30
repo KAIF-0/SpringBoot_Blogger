@@ -24,7 +24,7 @@ public class AdminService {
             return cachedUsers;
         }
         List<UserEntity> users = userRepository.findAll();
-        cacheService.set("allUsers", users, 300L); // Cache for 5 minutes
+        // cacheService.set("allUsers", users, 300L); // Cache for 5 minutes
         return users;
     }
 
