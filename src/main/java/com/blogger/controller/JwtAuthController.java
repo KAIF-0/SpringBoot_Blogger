@@ -34,6 +34,7 @@ public class JwtAuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserEntity user) {
         try {
+            //this will internally call loadUserByUsername to verify if user exists
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             user.getUsername(), user.getPassword()));

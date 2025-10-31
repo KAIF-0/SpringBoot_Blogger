@@ -1,9 +1,17 @@
+# # profile demo
+
 # main:
 #   allowed-circular-references: true
 
 # spring:
 #   application:
 #     name: blogger
+  
+#   datasource:
+#     url: jdbc:postgresql://host.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+#     username: username
+#     password: password
+#     driver-class-name: org.postgresql.Driver
 
 #   security:
 #     oauth2:
@@ -11,19 +19,13 @@
 #         registration:
 #           google:
 #             client-id: 1099168239645-xxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com
-#             client-secret: GOCSPX-xxxxxxxxxxxxxxxxxxxxxxxxxx
-
-#   datasource:
-#     url: jdbc:postgresql://ep-rough-darkness-adfrk27t-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
-#     username: neondb_owner
-#     password: npg_VuJ6p2WkxfhI
-#     driver-class-name: org.postgresql.Driver
+#             client-secret: GOCSPX-xxxxxxxxxxxxxxxxxxxxxxxxxx  
 
 #   mail:
 #     host: smtp.gmail.com
 #     port: 587
-#     username: kaif8700979251@gmail.com
-#     password: debl rebv cldo hucs
+#     username: username
+#     password: password
 #     properties:
 #       mail:
 #         smtp:
@@ -32,18 +34,19 @@
 #             enable: true  
 
 #   data:
-#     redis:
-#       host: redis-11466.crce182.ap-south-1-1.ec2.redns.redis-cloud.com
+#      redis:
+#       host: host
 #       port: 11466
 #       username: default
-#       password: TXx18KiWSPdadu5VObLxNmdxJ7Iumkiq
+#       password: password
+
 
 #   jpa:
 #     database-platform: org.hibernate.dialect.PostgreSQLDialect
 #     hibernate:
 #       ddl-auto: update
 #     show-sql: true
-
+  
 #   devtools:
 #     restart:
 #       enabled: true
